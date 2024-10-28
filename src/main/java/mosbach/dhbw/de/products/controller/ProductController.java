@@ -4,9 +4,6 @@ import mosbach.dhbw.de.products.data.api.Product;
 import mosbach.dhbw.de.products.data.api.ProductManager;
 import mosbach.dhbw.de.products.data.api.TokenManager;
 import mosbach.dhbw.de.products.data.impl.ProductImpl;
-import mosbach.dhbw.de.products.data.impl.ProductManagerImpl;
-import mosbach.dhbw.de.products.model.ProductRequest;
-import mosbach.dhbw.de.products.model.SortOrderRequest;
 import mosbach.dhbw.de.products.model.SortedProducts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,25 +33,21 @@ public class ProductController {
 
     @GetMapping
     public ResponseEntity<?> getAllProducts(@RequestHeader("Authorization") String token,
-                                            @RequestBody SortOrderRequest sortOrderRequest) {
+                                            @RequestParam(value = "sortOrder", defaultValue = "alphabet") String sortOrder) {
         try {
             if (token != null && token.startsWith("Bearer ")) {
                 String tokenValue = token.substring(7);
                 if (tokenManager.validateToken(tokenValue)) {
-                    String sortOrder = sortOrderRequest.getSortOrder();
                     Logger
                             .getLogger("ProductController")
                             .log(Level.INFO, "Bin drin mit sortOrder: " + sortOrder);
 
-                    SortedProducts answerSortedProducts = new SortedProducts();
-                    List<Product> myProducts = productManager.getAllProducts();
+                    List<Product> answerSortedProducts = productManager.getAllProducts();
 
                     if (sortOrder.equals("price")) {
-                        myProducts.sort(Comparator.comparing(Product::getPriceInEuro));
-                        answerSortedProducts.setSortOrder("price");
+                        answerSortedProducts.sort(Comparator.comparing(Product::getPriceInEuro));
                     } else if (sortOrder.equals("alphabet")) {
-                        myProducts.sort(Comparator.comparing(Product::getDisplayName));
-                        answerSortedProducts.setSortOrder("alphabet");
+                        answerSortedProducts.sort(Comparator.comparing(Product::getDisplayName));
                     }
 
                     // TODO: Sort the tasks with other sort orders
@@ -62,7 +55,6 @@ public class ProductController {
                     Logger
                             .getLogger("ProductController")
                             .log(Level.INFO, "Products sorted");
-                    answerSortedProducts.setProducts(myProducts);
                     return ResponseEntity.ok(answerSortedProducts);
                 } else {
                     return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid token");

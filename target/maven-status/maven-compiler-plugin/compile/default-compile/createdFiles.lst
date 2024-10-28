@@ -12,7 +12,6 @@ mosbach\dhbw\de\products\model\CartItem.class
 mosbach\dhbw\de\products\data\api\TokenManager.class
 mosbach\dhbw\de\tasks\model\alexa\OutputSpeechRO.class
 mosbach\dhbw\de\tasks\model\MessageAnswer.class
-mosbach\dhbw\de\products\model\SortOrderRequest.class
 mosbach\dhbw\de\tasks\model\alexa\AlexaRO.class
 mosbach\dhbw\de\products\data\api\Cart.class
 mosbach\dhbw\de\tasks\data\impl\LocalPostgresTest.class
@@ -22,6 +21,7 @@ mosbach\dhbw\de\products\data\impl\CustomerImpl.class
 mosbach\dhbw\de\products\controller\AuthController.class
 mosbach\dhbw\de\products\data\api\Customer.class
 mosbach\dhbw\de\products\data\impl\TokenManagerImpl.class
+mosbach\dhbw\de\products\model\SingleProductRequest.class
 mosbach\dhbw\de\products\data\impl\ProductManagerImpl.class
 mosbach\dhbw\de\products\controller\ProductController.class
 mosbach\dhbw\de\tasks\TasksBackendApplication.class

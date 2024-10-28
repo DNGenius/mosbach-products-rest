@@ -1,12 +1,11 @@
 package mosbach.dhbw.de.products.controller;
 
 import mosbach.dhbw.de.products.data.api.*;
+import mosbach.dhbw.de.products.data.api.CartItem;
 import mosbach.dhbw.de.products.data.impl.CustomerImpl;
 import mosbach.dhbw.de.products.data.impl.CustomerManagerImpl;
+import mosbach.dhbw.de.products.model.*;
 import mosbach.dhbw.de.products.model.Customer;
-import mosbach.dhbw.de.products.model.CustomerCart;
-import mosbach.dhbw.de.products.model.MessageAnswer;
-import mosbach.dhbw.de.products.model.ProductRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -113,12 +112,13 @@ public class CartController {
 
     @DeleteMapping("/remove")
     public ResponseEntity<String> removeProductFromCart(@RequestHeader("Authorization") String token,
-                                                        @RequestParam String productID) {
+                                                        @RequestBody SingleProductRequest singleProductRequest) {
         try {
             if (token != null && token.startsWith("Bearer ")) {
                 String tokenValue = token.substring(7);
                 if (tokenManager.validateToken(tokenValue)) {
                     String customerID = tokenManager.getUserIDFromToken(tokenValue);
+                    String productID = singleProductRequest.getProductID();
                     boolean removed = cartManager.removeProductFromCart(customerID, productID);
                     if (removed) {
                         return ResponseEntity.ok("Product removed from cart");

@@ -36,7 +36,7 @@ public class ProductController {
 
     @GetMapping
     public ResponseEntity<?> getAllProducts(@RequestHeader("Authorization") String token,
-                                         @RequestBody SortOrderRequest sortOrderRequest) {
+                                            @RequestBody SortOrderRequest sortOrderRequest) {
         try {
             if (token != null && token.startsWith("Bearer ")) {
                 String tokenValue = token.substring(7);

@@ -5,7 +5,6 @@ import mosbach.dhbw.de.products.data.api.TokenManager;
 import mosbach.dhbw.de.products.data.impl.CustomerImpl;
 import mosbach.dhbw.de.products.data.impl.CustomerManagerImpl;
 import mosbach.dhbw.de.products.model.Customer;
-import mosbach.dhbw.de.products.model.MessageAnswer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

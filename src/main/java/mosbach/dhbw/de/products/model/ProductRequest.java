@@ -11,12 +11,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class LoginRequest {
+public class ProductRequest {
 
-    @JsonProperty("userEmail")
-    private String userEmail;
-    @JsonProperty("userPassword")
-    private String userPassword;
+    @JsonProperty("productID")
+    private String productID;
+    @JsonProperty("quantity")
+    private Integer quantity;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
 
@@ -24,33 +24,33 @@ public class LoginRequest {
      * No args constructor for use in serialization
      * 
      */
-    public LoginRequest() {
+    public ProductRequest() {
     }
 
-    public LoginRequest(String userEmail, String userPassword) {
+    public ProductRequest(String productID, Integer quantity) {
         super();
-        this.userEmail = userEmail;
-        this.userPassword = userPassword;
+        this.productID = productID;
+        this.quantity = quantity;
     }
 
-    @JsonProperty("userEmail")
-    public String getUserEmail() {
-        return userEmail;
+    @JsonProperty("productID")
+    public String getProductID() {
+        return productID;
     }
 
-    @JsonProperty("userEmail")
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
+    @JsonProperty("productID")
+    public void setProductID(String productID) {
+        this.productID = productID;
     }
 
-    @JsonProperty("userPassword")
-    public String getUserPassword() {
-        return userPassword;
+    @JsonProperty("quantity")
+    public Integer getQuantity() {
+        return quantity;
     }
 
-    @JsonProperty("userPassword")
-    public void setUserPassword(String userPassword) {
-        this.userPassword = userPassword;
+    @JsonProperty("quantity")
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 
     @JsonAnyGetter

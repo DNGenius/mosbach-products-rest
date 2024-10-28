@@ -23,6 +23,8 @@ public class Product {
     private Integer quantity;
     @JsonProperty("priceInEuro")
     private Double priceInEuro;
+    @JsonProperty("productID")
+    private String productID;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
 
@@ -33,13 +35,14 @@ public class Product {
     public Product() {
     }
 
-    public Product(String displayName, String category, Integer weightInGrams, Integer quantity, Double priceInEuro) {
+    public Product(String displayName, String category, Integer weightInGrams, Integer quantity, Double priceInEuro, String productID) {
         super();
         this.displayName = displayName;
         this.category = category;
         this.weightInGrams = weightInGrams;
         this.quantity = quantity;
         this.priceInEuro = priceInEuro;
+        this.productID = productID;
     }
 
     @JsonProperty("displayName")
@@ -91,6 +94,12 @@ public class Product {
     public void setPriceInEuro(Double priceInEuro) {
         this.priceInEuro = priceInEuro;
     }
+
+    @JsonProperty("productID")
+    public String getProductID() { return productID; }
+
+    @JsonProperty("productID")
+    public void setProductID(String productID) { this.productID = productID; }
 
     @JsonAnyGetter
     public Map<String, Object> getAdditionalProperties() {

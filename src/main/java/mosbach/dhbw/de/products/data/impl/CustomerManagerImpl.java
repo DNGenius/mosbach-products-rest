@@ -214,10 +214,10 @@ public class CustomerManagerImpl implements CustomerManager {
 
             for (Customer customer : customers) {
                 if (customer.getUserEmail().equals(userEmail)) {
+                    customerID = customer.getCustomerID();
                     Logger
                             .getLogger("CustomerManager")
-                            .log(Level.INFO, "User ID found for email: " + userEmail);
-                    customerID = customer.getCustomerID();
+                            .log(Level.INFO, "CustomerID: " + customerID + " found for email: " + userEmail);
                 }
             }
 

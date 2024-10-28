@@ -7,15 +7,15 @@ public class ProductImpl implements Product {
     private String displayName;
     private String category;
     private Integer weightInGrams;
-    private Integer quantity;
+    private Integer totalQuantity;
     private Double priceInEuro;
     private String productID;
 
-    public ProductImpl(String displayName, String category, Integer weightInGrams, Integer quantity, Double priceInEuro, String productID) {
+    public ProductImpl(String displayName, String category, Integer weightInGrams, Integer totalQuantity, Double priceInEuro, String productID) {
         this.displayName = displayName;
         this.category = category;
         this.weightInGrams = weightInGrams;
-        this.quantity = quantity;
+        this.totalQuantity = totalQuantity;
         this.priceInEuro = priceInEuro;
         this.productID = productID;
     }
@@ -48,12 +48,12 @@ public class ProductImpl implements Product {
     }
 
     @Override
-    public Integer getQuantity() {
-        return quantity;
+    public Integer getTotalQuantity() {
+        return totalQuantity;
     }
 
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
+    public void setTotalQuantity(Integer totalQuantity) {
+        this.totalQuantity = totalQuantity;
     }
 
     @Override

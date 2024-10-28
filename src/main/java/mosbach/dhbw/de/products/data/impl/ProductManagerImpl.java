@@ -49,7 +49,10 @@ public class ProductManagerImpl implements ProductManager {
                 String displayName = properties.getProperty("Product." + i + ".displayName");
                 String category =  properties.getProperty("Product." + i + ".category");
                 Integer weightInGrams  = Integer.parseInt(properties.getProperty("Product." + i + ".weightInGrams"));
-                Integer quantity  = Integer.parseInt(properties.getProperty("Product." + i + ".quantity"));
+                String totalQuantityStr = properties.getProperty("Product." + i + ".totalQuantity");
+                Integer totalQuantity = (totalQuantityStr != null && !totalQuantityStr.isEmpty())
+                        ? Integer.parseInt(totalQuantityStr)
+                        : Integer.MAX_VALUE; // Wert auf den totalQuantity gesetzt wird, falls keiner angegeben ist
                 Double priceInEuro = Double.parseDouble(properties.getProperty("Product." + i + ".priceInEuro"));
                 String productID = properties.getProperty("Product." + i + ".productID");
 
@@ -57,7 +60,7 @@ public class ProductManagerImpl implements ProductManager {
                         .getLogger("ProductManager")
                         .log(Level.INFO, "Found a product");
 
-                tempProducts.add(new ProductImpl(displayName, category, weightInGrams, quantity, priceInEuro, productID));
+                tempProducts.add(new ProductImpl(displayName, category, weightInGrams, totalQuantity, priceInEuro, productID));
                 i++;
             }
         } catch (IOException e) {
@@ -90,14 +93,17 @@ public class ProductManagerImpl implements ProductManager {
             String displayName = properties.getProperty("Product." + productID + ".displayName");
             String category =  properties.getProperty("Product." + productID + ".category");
             Integer weightInGrams  = Integer.parseInt(properties.getProperty("Product." + productID + ".weightInGrams"));
-            Integer quantity  = Integer.parseInt(properties.getProperty("Product." + productID + ".quantity"));
+            String totalQuantityStr = properties.getProperty("Product." + productID + ".totalQuantity");
+            Integer totalQuantity = (totalQuantityStr != null && !totalQuantityStr.isEmpty())
+                    ? Integer.parseInt(totalQuantityStr)
+                    : Integer.MAX_VALUE; // Wert auf den totalQuantity gesetzt wird, falls keiner angegeben ist
             Double priceInEuro = Double.parseDouble(properties.getProperty("Product." + productID + ".priceInEuro"));
 
             Logger
                     .getLogger("ProductManager")
                     .log(Level.INFO, "Found the product");
 
-            tempProduct = new ProductImpl(displayName, category, weightInGrams, quantity, priceInEuro, productID);
+            tempProduct = new ProductImpl(displayName, category, weightInGrams, totalQuantity, priceInEuro, productID);
 
         } catch (IOException e) {
             Logger

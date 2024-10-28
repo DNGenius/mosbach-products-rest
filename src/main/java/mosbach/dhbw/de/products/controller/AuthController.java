@@ -37,7 +37,7 @@ public class AuthController {
 
             if (customerManager.authenticateCustomer(userEmail, userPassword)) {
                 // Erfolgreiche Authentifizierung
-                Token token = tokenManager.generateToken(customerManager.getCustomerIDByEmail(userEmail)); // TODO userEmail in getCustomerIDByEmail ändern
+                Token token = tokenManager.generateToken(customerManager.getCustomerIDByEmail(userEmail));
                 return ResponseEntity.ok(token.getTokenValue());
             } else {
                 // Email oder Passwort falsch / nicht vorhanden
@@ -50,12 +50,11 @@ public class AuthController {
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<?> logout(@RequestHeader("Authorization") String authHeader) {
-        Logger logger = Logger.getLogger("AuthController");
+    public ResponseEntity<?> logout(@RequestHeader("Authorization") String token) {
 
         // Extrahiert tokenValue aus dem Authorization-Header und userID durch den Token
-        if (authHeader != null && authHeader.startsWith("Bearer ")) {
-            String tokenValue = authHeader.substring(7);
+        if (token != null && token.startsWith("Bearer ")) {
+            String tokenValue = token.substring(7);
             String userID = tokenManager.getUserIDFromToken(tokenValue);
 
             // Entfernt den Token, wenn gültige userID gefunden wird

@@ -11,12 +11,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class LoginRequest {
+public class SortOrderRequest {
 
-    @JsonProperty("userEmail")
-    private String userEmail;
-    @JsonProperty("userPassword")
-    private String userPassword;
+    @JsonProperty("sortOrder")
+    private String sortOrder;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
 
@@ -24,33 +22,22 @@ public class LoginRequest {
      * No args constructor for use in serialization
      * 
      */
-    public LoginRequest() {
+    public SortOrderRequest() {
     }
 
-    public LoginRequest(String userEmail, String userPassword) {
+    public SortOrderRequest(String sortOrder) {
         super();
-        this.userEmail = userEmail;
-        this.userPassword = userPassword;
+        this.sortOrder = sortOrder;
     }
 
-    @JsonProperty("userEmail")
-    public String getUserEmail() {
-        return userEmail;
+    @JsonProperty("sortOrder")
+    public String getSortOrder() {
+        return sortOrder;
     }
 
-    @JsonProperty("userEmail")
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
-    }
-
-    @JsonProperty("userPassword")
-    public String getUserPassword() {
-        return userPassword;
-    }
-
-    @JsonProperty("userPassword")
-    public void setUserPassword(String userPassword) {
-        this.userPassword = userPassword;
+    @JsonProperty("sortOrder")
+    public void setSortOrder(String sortOrder) {
+        this.sortOrder = sortOrder;
     }
 
     @JsonAnyGetter

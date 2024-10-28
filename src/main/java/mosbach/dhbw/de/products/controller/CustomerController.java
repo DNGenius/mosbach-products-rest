@@ -7,6 +7,7 @@ import mosbach.dhbw.de.products.data.impl.CustomerManagerImpl;
 import mosbach.dhbw.de.products.model.Customer;
 import mosbach.dhbw.de.products.model.MessageAnswer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +33,9 @@ public class CustomerController {
 
     @GetMapping
     public ResponseEntity<List<Customer>> getAllCustomers() {
-        Logger.getLogger("CustomerController").log(Level.INFO, "GET /customer called");
+        Logger
+                .getLogger("CustomerController")
+                .log(Level.INFO, "GET /customer called");
 
         try {
             List<Customer> myCustomers = new ArrayList<>();
@@ -51,16 +54,17 @@ public class CustomerController {
             }
             return ResponseEntity.ok(myCustomers);
         } catch (Exception e) {
-            Logger.getLogger("CustomerController GET Customers").log(Level.INFO, "Error retrieving customers", e);
+            Logger
+                    .getLogger("CustomerController GET Customers")
+                    .log(Level.INFO, "Error retrieving customers", e);
             return ResponseEntity.internalServerError().build();
         }
     }
 
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public MessageAnswer createCustomer(@RequestBody Customer customer) {
+    public ResponseEntity<String> createCustomer(@RequestBody Customer customer) {
         Logger.getLogger("CustomerController").log(Level.INFO, "POST /customer called");
 
-        String message;
         try {
             mosbach.dhbw.de.products.data.api.Customer c = new CustomerImpl(
                     customer.getUserEmail(),
@@ -70,16 +74,20 @@ public class CustomerController {
                     customerManager.getNextCustomerId());
 
             if (customerManager.addCustomer(c)) {
-                message = "Successfully registered";
+                return ResponseEntity.ok("Successfully registered");
             } else {
-                message = "This email is already registered in our system. If you're having trouble accessing your account, please contact our support team for assistance.";
+                return ResponseEntity
+                        .status(HttpStatus.CONFLICT)
+                        .body("This email is already registered in our system. If you're having trouble accessing your account, please contact our support team for assistance.");
             }
         } catch (IllegalArgumentException e) {
-            message = "Oops! It looks like you missed a field. Please make sure all fields are completed before submitting.";
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body("Oops! It looks like you missed a field. Please make sure all fields are completed before submitting.");
         } catch (RuntimeException e) {
-            message = "Oops! Something went wrong on our end while processing your registration. Please refresh the page and try again.";
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Oops! Something went wrong on our end while processing your registration. Please refresh the page and try again.");
         }
-
-        return new MessageAnswer(message);
     }
 }

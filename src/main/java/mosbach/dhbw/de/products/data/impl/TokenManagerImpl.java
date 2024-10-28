@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 public class TokenManagerImpl implements TokenManager {
 
     private static TokenManagerImpl tokenManagerImpl = null;
-    String fileName =  "tokens.properties";
+    String fileName = "tokens.properties";
 
     private TokenManagerImpl() { }
 
@@ -32,8 +32,16 @@ public class TokenManagerImpl implements TokenManager {
         String tokenValue = UUID.randomUUID().toString();
         Token newToken = new TokenImpl(tokenValue, userID);
         List<Token> currentTokens = getAllTokens();
-        currentTokens.removeIf(token -> token.getUserID().equals(userID)); // Entfernt alten Token, falls vorhanden
+        Logger logger = Logger.getLogger("TokenManager");
+        logger.info("Anzahl der Tokens vor dem Entfernen: " + currentTokens.size());
+        logger.info("Zu entfernende userID: " + userID);
+        boolean removed = currentTokens.removeIf(token -> token.getUserID().equals(userID)); // Entfernt alten Token, falls vorhanden
+        logger.info("Anzahl der Tokens nach dem Entfernen: " + currentTokens.size());
+        logger.info("Wurde ein Token entfernt? " + removed);
         currentTokens.add(newToken);
+        Logger
+                .getLogger("TokenManager")
+                .log(Level.INFO, "Token hinzugefügt mit: " + tokenValue + userID);
         setAllTokens(currentTokens);
         return newToken;
     }
@@ -43,11 +51,20 @@ public class TokenManagerImpl implements TokenManager {
         Properties properties = new Properties();
         List<Token> tokens = new ArrayList<>();
 
-        try (InputStream input = new FileInputStream(fileName)) {
-            properties.load(input);
+        try {
+            ClassLoader loader = Thread.currentThread().getContextClassLoader();
+            try(InputStream resourceStream = loader.getResourceAsStream(fileName)) {
+                properties.load(resourceStream);
+            }
+            Logger
+                    .getLogger("TokenManager")
+                    .log(Level.INFO, "File content: " + properties.toString());
 
             for (String userID : properties.stringPropertyNames()) {
                 String tokenValue = properties.getProperty(userID);
+                Logger
+                        .getLogger("TokenManager")
+                        .log(Level.INFO, "Loaded token: " + tokenValue + " for userID: " + userID);
                 tokens.add(new TokenImpl(tokenValue, userID));
             }
 
@@ -88,10 +105,24 @@ public class TokenManagerImpl implements TokenManager {
 
     public String getUserIDFromToken(String tokenValue) {
         List<Token> tokens = getAllTokens();
-        return tokens.stream()
-                .filter(token -> token.getTokenValue().equals(tokenValue))
-                .findFirst()
-                .map(Token::getUserID)
-                .orElse(null);
+        Logger
+                .getLogger("TokenManager")
+                .log(Level.INFO, "Übergebener token: " + tokenValue);
+        for (Token token : tokens) {
+            Logger
+                    .getLogger("TokenManager")
+                    .log(Level.INFO, "Checking token: " + token.getTokenValue());
+            if (token.getTokenValue().equals(tokenValue)) {
+                Logger
+                        .getLogger("TokenManager")
+                        .log(Level.INFO, "Found matching token for userID: " + token.getUserID());
+                return token.getUserID();
+            }
+        }
+        Logger
+                .getLogger("TokenManager")
+                .log(Level.INFO, "No matching token found");
+        return null;
     }
+
 }

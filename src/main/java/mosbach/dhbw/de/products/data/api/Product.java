@@ -5,7 +5,7 @@ public interface Product {
     String getDisplayName();
     String getCategory();
     Integer getWeightInGrams();
-    Integer getQuantity();
+    Integer getTotalQuantity();
     Double getPriceInEuro();
     String getProductID();
 }

@@ -2,6 +2,7 @@
 package mosbach.dhbw.de.products.model;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
@@ -11,12 +12,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class LoginRequest {
+public class CustomerCart {
 
-    @JsonProperty("userEmail")
-    private String userEmail;
-    @JsonProperty("userPassword")
-    private String userPassword;
+    @JsonProperty("cartItems")
+    private List<CartItem> cartItems;
+    @JsonProperty("totalPrice")
+    private Double totalPrice;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
 
@@ -24,33 +25,33 @@ public class LoginRequest {
      * No args constructor for use in serialization
      * 
      */
-    public LoginRequest() {
+    public CustomerCart() {
     }
 
-    public LoginRequest(String userEmail, String userPassword) {
+    public CustomerCart(List<CartItem> cartItems, Double totalPrice) {
         super();
-        this.userEmail = userEmail;
-        this.userPassword = userPassword;
+        this.cartItems = cartItems;
+        this.totalPrice = totalPrice;
     }
 
-    @JsonProperty("userEmail")
-    public String getUserEmail() {
-        return userEmail;
+    @JsonProperty("cartItems")
+    public List<CartItem> getCartItems() {
+        return cartItems;
     }
 
-    @JsonProperty("userEmail")
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
+    @JsonProperty("cartItems")
+    public void setCartItems(List<CartItem> cartItems) {
+        this.cartItems = cartItems;
     }
 
-    @JsonProperty("userPassword")
-    public String getUserPassword() {
-        return userPassword;
+    @JsonProperty("totalPrice")
+    public Double getTotalPrice() {
+        return totalPrice;
     }
 
-    @JsonProperty("userPassword")
-    public void setUserPassword(String userPassword) {
-        this.userPassword = userPassword;
+    @JsonProperty("totalPrice")
+    public void setTotalPrice(Double totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
     @JsonAnyGetter

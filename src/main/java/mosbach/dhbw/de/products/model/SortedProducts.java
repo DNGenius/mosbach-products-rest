@@ -2,6 +2,7 @@
 package mosbach.dhbw.de.products.model;
 
 import com.fasterxml.jackson.annotation.*;
+import mosbach.dhbw.de.products.data.api.Product;
 
 import java.util.LinkedHashMap;
 import java.util.List;

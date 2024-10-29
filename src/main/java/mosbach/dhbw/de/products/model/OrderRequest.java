@@ -13,8 +13,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class OrderRequest {
 
-    @JsonProperty("customerID")
-    private String customerID;
     @JsonProperty("pickupDate")
     private long pickupDate;
     @JsonIgnore
@@ -27,20 +25,9 @@ public class OrderRequest {
     public OrderRequest() {
     }
 
-    public OrderRequest(String customerID, long pickupDate) {
+    public OrderRequest(long pickupDate) {
         super();
-        this.customerID = customerID;
         this.pickupDate = pickupDate;
-    }
-
-    @JsonProperty("customerID")
-    public String getCustomerID() {
-        return customerID;
-    }
-
-    @JsonProperty("customerID")
-    public void setCustomerID(String customerID) {
-        this.customerID = customerID;
     }
 
     @JsonProperty("pickupDate")

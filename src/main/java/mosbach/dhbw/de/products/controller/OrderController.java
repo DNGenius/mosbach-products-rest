@@ -39,7 +39,7 @@ public class OrderController {
             if (token != null && token.startsWith("Bearer ")) {
                 String tokenValue = token.substring(7);
                 if (tokenManager.validateToken(tokenValue)) {
-                    String customerID = orderRequest.getCustomerID();
+                    String customerID = tokenManager.getUserIDFromToken(tokenValue);
                     long pickupDateMillis = orderRequest.getPickupDate(); // Zeitstempel in Millisekunden
                     // Konvertiere Millisekunden in LocalDate
                     LocalDate pickupDate = Instant.ofEpochMilli(pickupDateMillis)

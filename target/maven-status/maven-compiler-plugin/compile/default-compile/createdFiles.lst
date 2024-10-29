@@ -2,6 +2,7 @@ mosbach\dhbw\de\products\data\impl\CartManagerImpl.class
 mosbach\dhbw\de\products\model\Customer.class
 mosbach\dhbw\de\products\data\api\CustomerManager.class
 mosbach\dhbw\de\tasks\model\alexa\SlotsRO.class
+mosbach\dhbw\de\products\data\impl\OrderManagerImpl.class
 mosbach\dhbw\de\products\data\impl\CustomerManagerImpl.class
 mosbach\dhbw\de\tasks\model\alexa\ContextRO.class
 mosbach\dhbw\de\products\data\impl\CartItemImpl.class
@@ -16,12 +17,15 @@ mosbach\dhbw\de\tasks\model\alexa\AlexaRO.class
 mosbach\dhbw\de\products\data\api\Cart.class
 mosbach\dhbw\de\tasks\data\impl\LocalPostgresTest.class
 mosbach\dhbw\de\tasks\data\api\Task.class
+mosbach\dhbw\de\products\controller\OrderController.class
 mosbach\dhbw\de\tasks\data\impl\TaskImpl.class
 mosbach\dhbw\de\products\data\impl\CustomerImpl.class
 mosbach\dhbw\de\products\controller\AuthController.class
 mosbach\dhbw\de\products\data\api\Customer.class
 mosbach\dhbw\de\products\data\impl\TokenManagerImpl.class
+mosbach\dhbw\de\products\model\OrderRequest.class
 mosbach\dhbw\de\products\model\SingleProductRequest.class
+mosbach\dhbw\de\products\data\api\OrderManager.class
 mosbach\dhbw\de\products\data\impl\ProductManagerImpl.class
 mosbach\dhbw\de\products\controller\ProductController.class
 mosbach\dhbw\de\tasks\TasksBackendApplication.class
@@ -42,11 +46,13 @@ mosbach\dhbw\de\tasks\model\TokenTask.class
 mosbach\dhbw\de\tasks\model\alexa\IntentRO.class
 mosbach\dhbw\de\products\controller\CartController.class
 mosbach\dhbw\de\products\controller\CustomerController.class
+mosbach\dhbw\de\products\data\impl\OrderImpl.class
 mosbach\dhbw\de\products\model\SortedProducts.class
 mosbach\dhbw\de\products\data\api\Product.class
 mosbach\dhbw\de\products\data\api\CartManager.class
 mosbach\dhbw\de\tasks\model\alexa\RequestRO.class
 mosbach\dhbw\de\products\data\api\CartItem.class
+mosbach\dhbw\de\products\data\api\Order.class
 mosbach\dhbw\de\products\model\LoginRequest.class
 mosbach\dhbw\de\products\model\MessageAnswer.class
 mosbach\dhbw\de\products\ProductsBackendApplication.class

@@ -8,7 +8,7 @@ public interface CustomerManager {
     List<Customer> getAllCustomers();
     void setAllCustomers(List<Customer> customers);
     boolean isEmailTaken(String email);
-    String getNextCustomerId();
+    String getNextCustomerID();
     boolean authenticateCustomer(String userEmail, String userPassword);
     String getCustomerIDByEmail(String userEmail);
 

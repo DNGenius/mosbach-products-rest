@@ -148,7 +148,7 @@ public class CustomerManagerImpl implements CustomerManager {
     }
 
     @Override
-    public String getNextCustomerId() {
+    public String getNextCustomerID() {
 
         Properties properties = new Properties();
         int maxId = 0;

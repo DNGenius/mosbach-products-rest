@@ -1,5 +1,6 @@
 package mosbach.dhbw.de.products.controller;
 
+import mosbach.dhbw.de.products.data.api.CartManager;
 import mosbach.dhbw.de.products.data.api.CustomerManager;
 import mosbach.dhbw.de.products.data.api.TokenManager;
 import mosbach.dhbw.de.products.data.impl.CustomerImpl;
@@ -22,11 +23,13 @@ import java.util.logging.Logger;
 public class CustomerController {
 
     private final CustomerManager customerManager;
+    private final CartManager cartManager;
     private final TokenManager tokenManager;
 
     @Autowired
-    public CustomerController(CustomerManager customerManager, TokenManager tokenManager) {
+    public CustomerController(CustomerManager customerManager, CartManager cartManager, TokenManager tokenManager) {
         this.customerManager = customerManager;
+        this.cartManager = cartManager;
         this.tokenManager = tokenManager;
     }
 
@@ -63,6 +66,7 @@ public class CustomerController {
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<String> createCustomer(@RequestBody Customer customer) {
         Logger.getLogger("CustomerController").log(Level.INFO, "POST /customer called");
+        String newCustomerID = customerManager.getNextCustomerID();
 
         try {
             mosbach.dhbw.de.products.data.api.Customer c = new CustomerImpl(
@@ -70,9 +74,10 @@ public class CustomerController {
                     customer.getUserPassword(),
                     customer.getLastName(),
                     customer.getFirstName(),
-                    customerManager.getNextCustomerId());
+                    newCustomerID);
 
             if (customerManager.addCustomer(c)) {
+                cartManager.createNewCart(newCustomerID);
                 return ResponseEntity.ok("Successfully registered");
             } else {
                 return ResponseEntity

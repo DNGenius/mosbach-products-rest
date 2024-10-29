@@ -31,19 +31,24 @@ public class CartManagerImpl implements CartManager {
         return cartManagerImpl;
     }
 
-    public void addProductToCart(String customerID, Product selectedProduct, Integer quantity) {
+    @Override
+    public void createNewCart(String customerID) {
         List<Cart> carts = getAllCarts();
-        Cart customerCart = getCartByCustomerID(customerID);
+        // Neuen Warenkorb mit cartID = customerID erstellen
+        Cart customerCart = new CartImpl(new ArrayList<>(), customerID, customerID);
+        carts.add(customerCart);
+        // Alle Warenkörbe speichern
+        setAllCarts(carts);
+    }
 
-        // Wenn kein Warenkorb existiert, einen neuen erstellen
-        if (customerCart == null) {
-            customerCart = new CartImpl(new ArrayList<>(), customerID, customerID);
-            carts.add(customerCart);
-        }
-
-        // Produkt zum Warenkorb hinzufügen
-        List<CartItem> items = customerCart.getCartItems();
+    @Override
+    public void addProductToCart(String customerID, Product selectedProduct, Integer quantity) {
+        List<Cart> carts = getAllCarts(); // Hole alle aktuellen Warenkörbe
+        Cart customerCart = getCartByCustomerID(customerID); // Hole Warenkorb des Kunden
         boolean productExists = false;
+
+        // Produkte im Warenkorb
+        List<CartItem> items = customerCart.getCartItems();
 
         // Wenn Produkt vorhanden, Menge erhöhen
         for (CartItem item : items) {
@@ -59,40 +64,77 @@ public class CartManagerImpl implements CartManager {
             items.add(new CartItemImpl(selectedProduct, quantity));
         }
 
-        // Alle Warenkörbe speichern
+        // Aktualisiere den Kunden-Warenkorb in der Liste aller Warenkörbe
+        for (Cart cart: carts) {
+            if (cart.getCustomerID().equals(customerID)) {
+                cart.setCartItems(items); // Aktualisiert den Warenkorb in der Liste
+                break;
+            }
+        }
+
+        // Speichere alle Warenkörbe
         setAllCarts(carts);
     }
 
     @Override
     public boolean removeProductFromCart(String customerID, String productID) {
-        List<Cart> allCarts = getAllCarts();
+        List<Cart> carts = getAllCarts(); // Hole alle aktuellen Warenkörbe
+        Cart customerCart = getCartByCustomerID(customerID); // Hole Warenkorb des Kunden
         boolean productRemoved = false;
 
-        for (Cart cart : allCarts) {
-            if (cart.getCustomerID().equals(customerID)) {
-                List<CartItem> items = cart.getCartItems();
-                Iterator<CartItem> iterator = items.iterator();
-                while (iterator.hasNext()) {
-                    CartItem item = iterator.next();
-                    if (item.getCartProduct().getProductID().equals(productID)) {
-                        iterator.remove();
-                        productRemoved = true;
-                        break;
-                    }
-                }
+        // Produkte im Warenkorb
+        List<CartItem> items = customerCart.getCartItems();
+
+        // Wenn Produkt vorhanden, Menge erhöhen
+        for (CartItem item : items) {
+            if (item.getCartProduct().getProductID().equals(productID)) {
+                items.remove(item);
+                productRemoved = true;
                 break;
             }
         }
 
         if (productRemoved) {
-            // Speichern Sie die Änderungen am Warenkorb
-            setAllCarts(allCarts);
+            // Aktualisiere den Kunden-Warenkorb in der Liste aller Warenkörbe
+            for (Cart cart: carts) {
+                if (cart.getCustomerID().equals(customerID)) {
+                    cart.setCartItems(items); // Aktualisiert den Warenkorb in der Liste
+                    break;
+                }
+            }
+            // Speichere alle Warenkörbe
+            setAllCarts(carts);
             return true;
         }
 
         return false;
     }
 
+    @Override
+    public void removeAllProductsFromCart(String customerID) {
+        List<Cart> carts = getAllCarts(); // Hole alle aktuellen Warenkörbe
+        Cart customerCart = getCartByCustomerID(customerID); // Hole Warenkorb des Kunden
+
+        // Überprüfe, ob der Warenkorb des Kunden existiert
+        if (customerCart.getCartItems().isEmpty()) {
+            return; // Kunden-Warenkorb existiert nicht
+        }
+
+        // Leere die Liste der CartItems
+        List<CartItem> emptyItems = new ArrayList<>();
+        customerCart.setCartItems(emptyItems); // Setze die CartItems auf eine leere Liste
+
+        // Aktualisiere den Kunden-Warenkorb in der Liste aller Warenkörbe
+        for (Cart cart : carts) {
+            if (cart.getCustomerID().equals(customerID)) {
+                cart.setCartItems(emptyItems); // Aktualisiert den Warenkorb in der Liste
+                break;
+            }
+        }
+
+        // Speichere alle Warenkörbe
+        setAllCarts(carts);
+    }
 
     @Override
     public List<Cart> getAllCarts() {
@@ -113,7 +155,7 @@ public class CartManagerImpl implements CartManager {
             while (properties.containsKey("Cart." + i + ".cartID")) {
                 String cartID = properties.getProperty("Cart." + i + ".cartID");
                 String customerID = properties.getProperty("Cart." + i + ".customerID");
-                List<CartItem> cartItems= new ArrayList<>();
+                List<CartItem> cartItems = new ArrayList<>();
                 int j = 1;
 
                 while (properties.containsKey("Cart." + i + ".product." + j + ".productID")) {

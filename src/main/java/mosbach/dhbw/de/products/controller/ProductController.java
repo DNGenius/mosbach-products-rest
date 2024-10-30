@@ -4,7 +4,6 @@ import mosbach.dhbw.de.products.data.api.Product;
 import mosbach.dhbw.de.products.data.api.ProductManager;
 import mosbach.dhbw.de.products.data.api.TokenManager;
 import mosbach.dhbw.de.products.data.impl.ProductImpl;
-import mosbach.dhbw.de.products.model.SortedProducts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,8 +48,6 @@ public class ProductController {
                     } else if (sortOrder.equals("alphabet")) {
                         answerSortedProducts.sort(Comparator.comparing(Product::getDisplayName));
                     }
-
-                    // TODO: Sort the tasks with other sort orders
 
                     Logger
                             .getLogger("ProductController")

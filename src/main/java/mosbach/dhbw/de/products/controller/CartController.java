@@ -2,13 +2,9 @@ package mosbach.dhbw.de.products.controller;
 
 import mosbach.dhbw.de.products.data.api.*;
 import mosbach.dhbw.de.products.data.api.CartItem;
-import mosbach.dhbw.de.products.data.impl.CustomerImpl;
-import mosbach.dhbw.de.products.data.impl.CustomerManagerImpl;
 import mosbach.dhbw.de.products.model.*;
-import mosbach.dhbw.de.products.model.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

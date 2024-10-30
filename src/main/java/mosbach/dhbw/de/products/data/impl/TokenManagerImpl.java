@@ -99,7 +99,13 @@ public class TokenManagerImpl implements TokenManager {
 
     public void removeToken(String userID) {
         List<Token> tokens = getAllTokens();
+        Logger
+                .getLogger("TokenManager")
+                .log(Level.INFO, "Tokens before removeToken: " + tokens);
         tokens.removeIf(token -> token.getUserID().equals(userID));
+        Logger
+                .getLogger("TokenManager")
+                .log(Level.INFO, "Tokens after removeToken: " + tokens);
         setAllTokens(tokens);
     }
 

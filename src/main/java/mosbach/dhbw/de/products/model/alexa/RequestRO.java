@@ -1,4 +1,4 @@
-package mosbach.dhbw.de.tasks.model.alexa;
+package mosbach.dhbw.de.products.model.alexa;
 
 import com.fasterxml.jackson.annotation.*;
 

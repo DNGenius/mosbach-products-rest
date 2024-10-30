@@ -1,4 +1,4 @@
-package mosbach.dhbw.de.tasks.model.alexa;
+package mosbach.dhbw.de.products.model.alexa;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
@@ -8,29 +8,27 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import java.util.HashMap;
 import java.util.Map;
 
-
-
-@JsonTypeName(value = ContextRO.TYPENAME)
-public class ContextRO
+@JsonTypeName(value = SlotsRO.TYPENAME)
+public class SlotsRO
 {
-    protected final static String TYPENAME = "ContextRO";
+    protected final static String TYPENAME = "SlotRO";
 
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<>();
 
-    public ContextRO()
+    public SlotsRO()
     {
         super();
     }
-
+  
     @JsonAnyGetter
     public Map<String, Object> getAdditionalProperties() {
-    return this.additionalProperties;
+        return this.additionalProperties;
     }
 
     @JsonAnySetter
     public void setAdditionalProperty(String name, Object value) {
-    this.additionalProperties.put(name, value);
+        this.additionalProperties.put(name, value);
     }
 
 }

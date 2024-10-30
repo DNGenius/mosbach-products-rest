@@ -45,7 +45,7 @@ public class AlexaController {
 
                 // Cent-Teil nur hinzufügen, wenn er nicht „00“ ist
                 if (!centPart.equals("00")) {
-                    myAnswer += " " + centPart;
+                    myAnswer += " und " + centPart + " Cent";
                 }
 
                 myAnswer += ", "; // Trennzeichen für das nächste Produkt

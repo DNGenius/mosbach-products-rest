@@ -70,7 +70,7 @@ public class AuthController {
         Logger
                 .getLogger("AuthController")
                 .log(Level.INFO, "Logout failed: Invalid token");
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid token");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid operation");
     }
 
 }
